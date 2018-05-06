@@ -17,10 +17,10 @@ const GuestList = (props) => {
                 name={guest.name}
                 is_confirmed={guest.is_confirmed}
                 is_editing = {guest.is_editing}
-                handle_confrim = {()=>{props.toggle_confirm(index)}}
-                handle_edit={()=>{props.toggle_edit(index)}}
-                handle_remove = {()=>props.handle_remove(index)}
-                setName = {(txt => props.setName(txt, index))}
+                handle_confrim = {()=>{props.toggle_confirm(guest.id)}}
+                handle_edit={()=>{props.toggle_edit(guest.id)}}
+                handle_remove = {()=>props.handle_remove(guest.id)}
+                setName = {(txt => props.setName(txt, guest.id))}
             />
         )}
       </ul>

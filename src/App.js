@@ -8,10 +8,15 @@ class App extends Component {
   state = {
     is_filtred: false,
     addingGuest: "",
-    guests: [ 
-      {name:'A', is_confirmed:false, is_editing:false},
-      {name:'B', is_confirmed:true, is_editing:false}],
+    guests: [],
   };
+
+  lastId = 0;
+  newGuestID = (property, id)=>{
+    id = this.lastId;
+    this.lastId++;
+    return id;
+  }
 
   filter_geuest = () => {this.setState({is_filtred:!this.state.is_filtred})};
   get_totalInvited = () => { return this.state.guests.length };
@@ -21,7 +26,7 @@ class App extends Component {
   toggle_guestProperty = (property, indexToChange) => {
     this.setState({
       guests: this.state.guests.map((guest, index)=>{
-        if (indexToChange === index){ 
+        if (indexToChange === guest.id){ 
           return  {
             ...guest,
             [property]: !guest[property]
@@ -38,8 +43,8 @@ class App extends Component {
 
   setName = (txt, indexToChange)=>{
     this.setState({
-      guests: this.state.guests.map((guest, index)=>{
-        if (indexToChange === index){ 
+      guests: this.state.guests.map((guest)=>{
+        if (indexToChange === guest.id){ 
           return  {
             ...guest,
             name: txt
@@ -57,7 +62,7 @@ class App extends Component {
     this.setState({
       guests:[
         {
-          name: this.state.addingGuest, is_confirmed:false, is_editing:false
+          name: this.state.addingGuest, is_confirmed:false, is_editing:false, id: this.newGuestID()
         },
         ...this.state.guests
     ],
@@ -69,7 +74,7 @@ class App extends Component {
       this.setState({
 
         guests: this.state.guests.filter(
-          (guest, index) => { if(index !== matchedIndex) {return guest;} }
+          (guest) => { if(guest.id !== matchedIndex) {return guest;} }
         )
 
       });
